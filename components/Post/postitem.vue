@@ -9,18 +9,7 @@
 			</figcaption>
             <div class=" mb-3">
                 
-                <div class="rating-wrap d-flex m-2">
-                    <div class="rating-stars">
-                    <div class="back-stars">
-                        <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i> 
-                    
-                        <div :style="{width: rating*20 + '%'}" class="stars-active"> 
-                            <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    </div>
-                    <small class="label-rating text-muted ml-3">{{rating}}</small>
-                </div> 
+                
                 <div class="price-wrap m-2">
                     <span class="price h5">{{price}}</span>	
                 </div> 
@@ -60,10 +49,10 @@ export default {
             type:String,
             required:true
         },
-        rating: {
-            type:String,
-            required:false
-        },
+        // rating: {
+        //     type:String,
+        //     required:false
+        // },
         price: {
             type:String,
             required:true
@@ -82,8 +71,9 @@ export default {
     computed:{
         postLink(){
             return this.showBuyingOption? '/posts/'+this.id: '/admin/'+this.id 
-        }
+        },
     }
+    
 }
 </script>
 

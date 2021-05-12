@@ -5,10 +5,10 @@
 		    <h3>Reviews </h3>  
 
 	    </header>
-    <form>
+    <form @submit.prevent="submitReview">
         <div class="form-row">
             <div class="col-5">
-            <textarea type="text" class="form-control" placeholder="Add a review" />
+            <textarea type="text" class="form-control" v-model="newReview.comment" placeholder="Add a review" />
             </div>
             <div class="col-2">
                 <Rating @rateClickedEvent='handleRateClickEvent' :rating="newReview.rating" />
@@ -18,30 +18,32 @@
             </div>
         </div>
     </form>
-	<article class="box m-3">
-		<div class="icontext w-100">
+    <template v-for="value in reviews" class="box m-3"   >
+	<article :key="value[0]">
+		<!-- <p>{{value[1].date}}</p> -->
+        <div class="icontext w-100">
 			<b-avatar class="img-xs icon rounded-circle"/>
 			<div class="text">
-				<span class="date text-muted float-md-right">24.04.2020 </span>  
-				<h6 class="mb-1">Mike John </h6>
-				<Rating :rating="4.0"/> 
-				<span class="label-rating text-warning">Good</span>
+                
+				<span class="date text-muted float-md-right">{{value[1].date}} </span>  
+				<h6 class="mb-1">{{value[1].user}} </h6>
+				<Rating :rating="value[1].rating"/> 
+				<span class="label-rating text-warning"></span>
 			</div>
-		</div> <!-- icontext.// -->
+		</div> 
 		<div class="mt-3">
 			<p>
-				Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip
+				{{value[1].comment}}
 			</p>	
 		</div>
 	</article>
-
-	</div> <!-- col.// -->
+    </template>
+	</div> 
 </div>
 </template>
 <script>
 import  Rating from "@/components/Post/rating.vue";
+import axios from '~/node_modules/axios';
 export default {
     components:{
         Rating
@@ -49,16 +51,65 @@ export default {
     methods:{
         handleRateClickEvent(item){
             this.newReview.rating=item
+        },
+        submitReview(){
+            if(this.$store.getters.isAuthenticated){
+                this.$store.dispatch('addReview',this.newReview)
+            }
+            else{
+                this.$router.push('/auth/login')
+            }
+        }
+    },
+    props:{
+        reviews:{
+            type:Array
         }
     },
     data(){
         return {
             newReview:{
                 comment:'',
-                rating:2
-            }
+                rating:2,
+                postId:this.$route.params.id
+            },
+            // reviews:[
+    // [
+    //     "-M_WgELNrdRVJVsuydMe",
+    //     {
+    //         "comment": "asdasd",
+    //         "date": 1620841656684,
+    //         "postId": "-M_LbAMppsiDQoBSVCXg",
+    //         "rating": 2,
+    //         "user": "test@test.com"
+    //     }
+    // ],
+    // [
+    //     "-M_WgEsxpylp8z2XnORT",
+    //     {
+    //         "comment": "asdasd",
+    //         "date": 1620841659258,
+    //         "postId": "-M_LbAMppsiDQoBSVCXg",
+    //         "rating": 2,
+    //         "user": "test@test.com"
+    //     }
+    // ],
+    // [
+    //     "-M_WgFL6xRoSsVUgzHTS",
+    //     {
+    //         "comment": "asdasd",
+    //         "date": 1620841661133,
+    //         "postId": "-M_LbAMppsiDQoBSVCXg",
+    //         "rating": 2,
+    //         "user": "test@test.com"
+    //     }
+    // ]
+//]
+            
         }
-    }
+    },
+     
+        
 }
 </script>
 <style scoped>

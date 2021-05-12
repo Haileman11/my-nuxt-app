@@ -8,7 +8,7 @@
     :title="post.title"
     :thumbnail="post.thumbnail"
     :previewText="post.previewText"
-    :rating="post.rating"
+    
     :price="post.price"
     
     />
