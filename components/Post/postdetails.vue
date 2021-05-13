@@ -4,7 +4,7 @@
 		<aside class="col-md-6 border-right">
 			<article class="gallery-wrap"> 
 				<div class="img-big-wrap">
-				<a href="#"><img :src="thumbnail"></a>
+				<a href="#" class="img-wrap"><img class="img-thumbnail" :src="thumbnail"></a>
 				</div> 
 			</article> 
 		</aside>

@@ -21,9 +21,9 @@ export default {
         post(){
             return this.$store.state.loadedPost.find(post=>post.id==this.$route.params.id)   
         },
-        loadRating(){
-            return this.$store.dispatch('loadRating')   
-        }
+        // loadRating(){
+        //     return this.$store.dispatch('loadRating')   
+        // }
     },
     asyncData(context){
         return axios.get('https://my-nuxt-72385-default-rtdb.firebaseio.com/reviews.json')

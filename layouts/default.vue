@@ -31,7 +31,10 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-
+.image-thumbnail{
+  /* border: none; */
+  padding-top:100% ;
+}
 .button--green {
   display: inline-block;
   border-radius: 4px;

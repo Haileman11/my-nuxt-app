@@ -1,37 +1,22 @@
 <template>
-    <article class="card card-product-list">
+    <article class="card card-product-list container">
 	<div class="card-body">
-	<div class="row">
+        <template v-for="item in getCartItems">
+	    <div class="row" :key="item.title">
 		<aside class="col-sm-4">
-			<a href="#" class="img-wrap"><img class="img-thumbnail" src="~/assets/images/9.jpg"></a>
+			<a href="#" class="img-wrap"><img class="img-thumbnail" :src="item.thumbnail"></a>
 		</aside> <!-- col.// -->
 		<div class="col-sm-8">
-				<a href="#" class="btn-link float-right"> <i class="fa fa-heart"></i></a>
-				<a href="#" class="title mt-2 h5">GoPro HERO7 Camera</a>
+				
+				<a href="" class="title mt-2 h5">{{item.title}}</a>
+                <p>{{item.description}}</p>
 				<div class="d-flex mb-3">
 					<div class="price-wrap mr-4">
-						<span class="price h5">$299.00</span>	
-					</div> <!-- price-dewrap // -->
-
-					<div class="rating-wrap">
-						<div class="rating-stars">
-						<div class="back-stars">
-							<i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i> 
-						
-							<div style="width:70%" class="stars-active"> 
-								<i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-						</div>
-						</div>
-						<small class="label-rating text-muted">7/10</small>
-					</div> <!-- rating-wrap.// -->
+						<span class="price h5">{{item.price}}</span>	
+					</div> 
+                    <Rating :rating="4" />
 				</div>
 				
-				<ul class="list-bullet">
-					<li>Optical heart sensor</li>
-					<li>S3 with dual-core processor</li>
-					<li>Accelerometer and gyroscope</li>
-				</ul>
 
 
 				<div class="form-row">
@@ -40,25 +25,48 @@
 						  <div class="input-group-prepend">
 						    <button class="btn btn-light" type="button" id="button-plus"> + </button>
 						  </div>
-						  <input type="text" class="form-control" value="1">
+						  <input type="text" class="form-control" v-model="item.info.quantity">
 						  <div class="input-group-append">
 						    <button class="btn btn-light" type="button" id="button-minus"> − </button>
 						  </div>
-						</div>  <!-- input-spinner.// -->
-					</div> <!-- col.// -->
+						</div>  
+					</div> 
 					<div class="form-group col-md">
-						<a href="#" class="btn btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </a>
-					</div> <!-- col.// -->
-				</div> <!-- row.// -->
+						<a href="#" class="btn-sm btn-primary btn-danger"> <span class="text">Remove from cart</span>  </a>
+					</div> 
+				</div> 
 			
-		</div> <!-- col.// -->
-	</div> <!-- row.// -->
-	</div> <!-- card-body .// -->
+		</div> 
+	    </div>
+        </template>
+        <div class="form-group col-md">
+						<a href="#" class="btn btn-primary"> <span class="text">Buy</span> <i class="fas fa-shopping-cart"></i> </a>
+					</div> 
+	</div>
 </article>
 </template>
 <script>
+import Rating from '~/components/Post/rating.vue';
 export default {
-	
+  components: { Rating },
+    computed:{
+        loadPost(){
+            return this.$store.getters.loadedPost
+        },
+        getCartItems(){
+            let cartitems=this.$store.getters.getCartItems
+            let result =[]
+            cartitems.forEach(item => {
+                const info={...item}
+                result.push({...this.loadPost.filter(p=>p.title==item.title)[0],info})
+                
+            });
+            console.log(result)
+            return result
+        }
+        
+    }
+
 }
 </script>
 
